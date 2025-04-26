@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1745694701182,
+      "tag": "0000_glamorous_paper_doll",
+      "breakpoints": true
+    }
+  ]
+}
