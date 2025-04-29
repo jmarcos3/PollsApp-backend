@@ -1,15 +1,19 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Headers } from '@nestjs/common';
-import { UserService as oginWithGoogleUseCase } from './user.service';
-import { log } from 'console';
 import { LoginWithGoogleUseCase } from './useCases/loginWithGoogle.useCase';
+import { CreateUserDto } from './dto/create-user-by-plataform.dto';
+import { RegisterOnPlataformUseCase } from './useCases/registerOnPlataform.useCase';
+import { RegisterUserDto } from './dto/front-end-info.dto';
+import { UserLoginDto } from './dto/user-login-dto.dto';
+
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly loginWithGoogleUseCase: LoginWithGoogleUseCase) {}
+  constructor(
+    private readonly loginWithGoogleUseCase: LoginWithGoogleUseCase,
+    private readonly registerOnPlataform: RegisterOnPlataformUseCase,
+  ) {}
 
-  @Post(
-    'loginGoogle',
-  )
+  @Post('loginGoogle')
 
   loginWithGoogle(@Headers('Authorization') authorization:string) {
     
@@ -18,23 +22,17 @@ export class UserController {
     return this.loginWithGoogleUseCase.execute(authorization);
   }
 
-//   @Get()
-//   findAll() {
-//     return this.loginWithGoogleUseCase.findAll();
-//   }
+  @Post()
 
-//   @Get(':id')
-//   findOne(@Param('id') id: string) {
-//     return this.loginWithGoogleUseCase.findOne(+id);
-//   }
+  registeOnPlataform(@Body() userInformation: RegisterUserDto){
+    
+    return this.registerOnPlataform.execute(userInformation)
+  }
 
-//   @Patch(':id')
-//   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-//     return this.loginWithGoogleUseCase.update(+id, updateUserDto);
-//   }
+  @Get()
 
-//   @Delete(':id')
-//   remove(@Param('id') id: string) {
-//     return this.loginWithGoogleUseCase.remove(+id);
-//   }
+  plataformLogin(@Body() userInformation: UserLoginDto){
+    return this.loginOnPlataform.execute(userInformation)
+  }
+
 }

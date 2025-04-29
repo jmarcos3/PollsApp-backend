@@ -6,6 +6,7 @@ export const userTable = mysqlTable('users', {
   googleId: varchar('google_id', { length: 50 }).notNull(),
   name: varchar('name', { length: 255 }).notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
+  password: varchar('password', { length: 255 }),
   status: tinyint('status').default(1).notNull(),
   role: mysqlEnum('role', ['admin', 'user'])
   .default('user')  

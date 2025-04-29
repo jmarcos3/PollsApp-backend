@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -11,8 +9,8 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true, // Torna as variáveis de ambiente acessíveis em toda a aplicação
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 
 

@@ -6,6 +6,8 @@ import { CreateNewUserByGoogle } from "../dto/create-new-user-by-google.dto";
 import { ulid } from "ulid";
 import { USER_ROLES } from "src/shared/constants/enum/user.enum";
 import { Injectable } from "@nestjs/common";
+import { CreateUserDto } from "../dto/create-user-by-plataform.dto";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserRepository{
@@ -55,5 +57,26 @@ export class UserRepository{
     .values(bodyToCreate);
 
     return userCreated
+  }
+
+
+  async createNewUserByPlataform(userInformation) {
+    // Criptografar a senha
+    const hashedPassword = await bcrypt.hash(userInformation.password, 10); // 10 é o "salt rounds"
+  
+    const bodyToCreate: CreateUserDto = {
+      id: ulid(),
+      role: USER_ROLES.USER,
+      email: userInformation.email,
+      name: userInformation.name,
+      password: hashedPassword, // agora a senha está criptografada
+      googleId: 'noGoogleId',
+    };
+  
+    const userCreated = await this.database
+      .insert(userTable)
+      .values(bodyToCreate);
+  
+    return userCreated;
   }
 }
