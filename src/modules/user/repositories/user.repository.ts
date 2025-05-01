@@ -5,7 +5,7 @@ import { UpdateUserByLoginGoogleDto } from "../dto/update-user-by-login-google.d
 import { CreateNewUserByGoogle } from "../dto/create-new-user-by-google.dto";
 import { ulid } from "ulid";
 import { USER_ROLES } from "src/shared/constants/enum/user.enum";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateUserDto } from "../dto/create-user-by-plataform.dto";
 import * as bcrypt from 'bcrypt';
 
@@ -78,5 +78,39 @@ export class UserRepository{
       .values(bodyToCreate);
   
     return userCreated;
+  }
+
+  async getUserByEmailAndPassword(userInformation){
+    
+    const users = await this.database
+      .select()
+      .from(userTable)
+      .where(eq(userTable.email, userInformation.email));
+
+    if (users.length === 0) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    const user = users[0];
+    
+    const passwordMatches = await bcrypt.compare(
+      userInformation.password,
+      user.password, 
+    );
+
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    return user;
+  }
+
+  async getUsers(){
+
+    const users = await this.database
+    .select().
+    from(userTable)
+
+    return users
   }
 }
