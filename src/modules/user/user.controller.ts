@@ -16,7 +16,6 @@ import { RegisterUserDto } from './dto/front-end-info.dto';
 import { UserLoginDto } from './dto/user-login-dto.dto';
 import { LoginOnPlataformUseCase } from './useCases/loginOnPlataform.useCase';
 import { userInfo } from 'os';
-import { AuthLoginUseCase } from './useCases/authLogin.useCase';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { GetUsersUseCase } from './useCases/getUsers.useCase';
 import { GoogleOrLocalJwtGuard } from '../auth/auth.guard';
@@ -27,14 +26,11 @@ export class UserController {
     private readonly loginWithGoogleUseCase: LoginWithGoogleUseCase,
     private readonly registerOnPlataform: RegisterOnPlataformUseCase,
     private readonly loginOnPlataform: LoginOnPlataformUseCase,
-    private readonly authLogin: AuthLoginUseCase,
     private readonly findUsers: GetUsersUseCase,
   ) {}
 
   @Post('loginGoogle')
   loginWithGoogle(@Headers('Authorization') authorization: string) {
-    console.log(authorization);
-
     return this.loginWithGoogleUseCase.execute(authorization);
   }
 

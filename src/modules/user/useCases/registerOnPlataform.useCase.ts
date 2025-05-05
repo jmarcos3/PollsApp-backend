@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { UserRepository } from "../repositories/user.repository";
 import { CreateUserDto } from "../dto/create-user-by-plataform.dto";
 import { USER_ERRORS } from "src/shared/constants/helpers/userErros.helpers";
@@ -14,18 +14,13 @@ export class RegisterOnPlataformUseCase{
 
   async execute(userInformation: any){
     // const newUserInformation = userInformation
-    try{
-      const userFound = await this.userRepository.getUserByEmail(userInformation.email)
-
-      if (userFound.length > 0 ){ return  {message:USER_ERRORS.alreadyCreated} }
+    const userFound = await this.userRepository.getUserByEmail(userInformation.email)
+      
+    if (userFound.length > 0){ throw new ConflictException(USER_ERRORS.alreadyCreated) }
   
-      const userCreated = await this.userRepository.createNewUserByPlataform(userInformation)
+    const userCreated = await this.userRepository.createNewUserByPlataform(userInformation)
   
-      if (userCreated){return {message:USER_SUCESSFULL.sucessfullCreated}}
-    }
-    catch(e){
-      console.log(e)
-    }
+    if (userCreated){return {message:USER_SUCESSFULL.sucessfullCreated}}
 
   }
 

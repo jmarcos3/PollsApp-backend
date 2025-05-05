@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1745694701182,
-      "tag": "0000_glamorous_paper_doll",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1745873294770,
-      "tag": "0001_great_redwing",
+      "when": 1746368715960,
+      "tag": "0000_smiling_guardian",
       "breakpoints": true
     }
   ]

@@ -10,6 +10,7 @@ import { JwtServiceDecode } from './services/jwt.service';
 import { GetUsersUseCase } from './useCases/getUsers.useCase';
 import { GoogleOrLocalJwtGuard } from '../auth/auth.guard';
 import { JwtStrategy } from '../auth/jwt.strategy';
+import { PollController } from '../poll/poll.controller';
 
 @Module({
   imports: [forwardRef(() => AuthModule)],

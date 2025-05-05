@@ -14,13 +14,11 @@ export class LoginWithGoogleUseCase{
 
   async execute (authorization:string) {
     const userGoogleInformation = this.jwtService.extractUserInformationFromGoogleToken(authorization)
-
+    
     const userFound = await this.userRepository.getUserByEmail(userGoogleInformation.email)
 
     if (userFound.length > 0){
       const userUpdated = await this.userRepository.updateUserByGoogleId(userGoogleInformation)
-
-
       if (userUpdated) return {message: USER_SUCESSFULL.sucessfullUpdated}
     }
 

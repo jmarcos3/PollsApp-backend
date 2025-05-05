@@ -6,8 +6,12 @@ import { USER_ERRORS } from 'src/shared/constants/helpers/userErros.helpers';
 export class JwtServiceDecode {
   extractUserInformationFromGoogleToken(authorization: string) {
     const token = authorization.split(' ')[1];
-    // console.log('token original:', token);
-    let extractedUserInformationFromGoogleToken: any = jwt.jwtDecode(token);
+    let extractedUserInformationFromGoogleToken
+
+    try{extractedUserInformationFromGoogleToken = jwt.jwtDecode(token);}
+
+    catch(e){throw new UnauthorizedException(USER_ERRORS.tokenInvalid)}
+    
     if (
       !extractedUserInformationFromGoogleToken.email ||
       !extractedUserInformationFromGoogleToken.sub
