@@ -18,20 +18,16 @@ export class PollRepository {
     this.database = Database.getInstance().getDrizzle();
   }
 
-  /**
-   * Insere a poll e os relacionamentos polls_options
-   */
   async createNewPoll(userId: string, dto: PollDto, pollId): Promise<{message:string}> {
     
 
     await this.database.transaction(async tx => {
-      // 1) insere a poll
+
       await tx.insert(pollsTable).values({
         id: pollId,
         title: dto.title,
         description: dto.description,
         user: userId,
-        // createdAt/updatedAt no DEFAULT
       });
     });
 
@@ -41,7 +37,6 @@ export class PollRepository {
   async getAllPollsWithOptions(page = 1, limit = 10) {
     const offset = (page - 1) * limit;
   
-    // Buscar apenas as polls paginadas
     const paginatedPolls = await this.database
       .select({
         pollId: pollsTable.id,
@@ -53,12 +48,11 @@ export class PollRepository {
       .limit(limit)
       .offset(offset);
   
-    // Pegamos os IDs das polls retornadas para buscar as options delas
     const pollIds = paginatedPolls.map((p) => p.pollId);
   
     if (pollIds.length === 0) return [];
   
-    // Agora buscamos as options relacionadas a essas polls
+  
     const options = await this.database
       .select({
         pollId: optionTable.pollId,
@@ -68,7 +62,7 @@ export class PollRepository {
       .from(optionTable)
       .where(inArray(optionTable.pollId, pollIds))
       
-    // Monta o resultado agrupando as options por poll
+
     const result = paginatedPolls.map(poll => ({
       id: poll.pollId,
       title: poll.title,

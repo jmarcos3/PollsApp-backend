@@ -15,12 +15,6 @@ export class OptionRepository {
     this.database = database.getDrizzle();
   }
 
-  /** 
-   * Para cada texto:
-   *  - Se já existir, pega o id
-   *  - Senão, insere e retorna o novo id
-   */
-
   async createAndReturnIds(texts: string[], pollId: string): Promise<string[]> {
     const unique = Array.from(new Set(texts.map(t => t.trim())));
     const ids: string[] = [];

@@ -16,17 +16,15 @@ export class CreatePollUseCase {
   ) {}
 
   async execute(authorization: string, pollDto: PollDto) {
-    // 1) valida usuário
+
     const { email, sub: googleId } = this.jwtService.extractUserInformationFromGoogleToken(authorization);
     const [user] = await this.userRepo.getUserByEmail(email);
 
     if (!user) throw new NotFoundException('Usuário não encontrado');
 
     const pollId = ulid();
-    // 3) cria poll + vincula opções
     const pollCreated = await this.pollRepo.createNewPoll(user.id, pollDto, pollId);
     
-    // 2) cria ou recupera opções -> pega só os IDs
     const optionIds = await this.optionRepo.createAndReturnIds(pollDto.options, pollId);
 
     

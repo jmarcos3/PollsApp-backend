@@ -61,15 +61,15 @@ export class UserRepository{
 
 
   async createNewUserByPlataform(userInformation) {
-    // Criptografar a senha
-    const hashedPassword = await bcrypt.hash(userInformation.password, 10); // 10 é o "salt rounds"
+   
+    const hashedPassword = await bcrypt.hash(userInformation.password, 10); 
   
     const bodyToCreate: CreateUserDto = {
       id: ulid(),
       role: USER_ROLES.USER,
       email: userInformation.email,
       name: userInformation.name,
-      password: hashedPassword, // agora a senha está criptografada
+      password: hashedPassword,
       googleId: 'noGoogleId',
     };
   

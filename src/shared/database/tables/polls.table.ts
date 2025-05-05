@@ -1,6 +1,6 @@
 import { mysqlTable, varchar, timestamp, foreignKey } from 'drizzle-orm/mysql-core';
 import { sql } from 'drizzle-orm';
-import { userTable } from './users.table'; // Ajuste o caminho conforme seu projeto
+import { userTable } from './users.table'; 
 
 export const pollsTable = mysqlTable('polls', {
   id: varchar('id', { length: 26 }).primaryKey().notNull(),
@@ -14,5 +14,5 @@ export const pollsTable = mysqlTable('polls', {
   userFk: foreignKey({
     columns: [table.user],
     foreignColumns: [userTable.id],
-  }).onDelete('cascade'), // Se o usuário for deletado, as enquetes também são
+  }).onDelete('cascade'), 
 }));
