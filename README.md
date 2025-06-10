@@ -54,10 +54,3 @@ The frontend for this project is available at:
 
 ---
 
-## 🛠️ How to Run the Project
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/polls-app.git
-cd polls-app/backend
