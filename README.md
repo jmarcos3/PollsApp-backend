@@ -50,7 +50,7 @@ This project was an excellent opportunity to reinforce and apply concepts such a
 ## 🌐 Frontend
 
 The frontend for this project is available at:  
-🔗 [https://github.com/jmarcos3/PollsApp-frontend](https://github.com/jmarcos3/PollsApp-frontend)
+🔗 [https://github.com/jmarcos3/pollsApp-frontend](https://github.com/jmarcos3/pollsApp-frontend)
 
 ---
 
